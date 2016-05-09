@@ -1,0 +1,24 @@
+{
+  "name": "promisify-git",
+  "version": "1.0.0",
+  "description": "This library aims to operate git repo locally in promisifying way.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexWang1987/promisify-git.git"
+  },
+  "keywords": [
+    "git",
+    "promisify",
+    "library"
+  ],
+  "author": "AlexWang <1669499355@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexWang1987/promisify-git/issues"
+  },
+  "homepage": "https://github.com/AlexWang1987/promisify-git#readme"
+}
