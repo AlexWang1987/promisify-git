@@ -157,3 +157,4 @@ var updateTag = function(tagname) {
 var delTag = function(tagname) {
   return git('tag -d ' + tagname)
 }
+
