@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/AlexWang1987/promisify-git/issues"
   },
-  "homepage": "https://github.com/AlexWang1987/promisify-git#readme"
+  "homepage": "https://github.com/AlexWang1987/promisify-git#readme",
+  "dependencies": {
+    "bluebird": "3.3.5"
+  }
 }
