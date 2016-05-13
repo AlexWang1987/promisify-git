@@ -8,18 +8,28 @@ if you get any bugs or improvements, please check this repo and make it better. 
 # usage
 
 ```
-var git = require('../index.js');
+var git = require('promisify-git');
 
 //current working directory
 var cwd = __dirname.substring(0,__dirname.lastIndexOf('/'));
 
-//getAllBranches
+//getTags
+git
+  .getTags()
+  .then(function(tags) {
+    console.log(tags);
+  })
+  .catch(function(e) {
+    console.log(e);
+  })
+
+//getAllBranches with specific git working directory
 git
   .getBranches({
-    cwd: cwd
+    cwd: cwd //optional,git working directory , default is process.cwd
   })
-  .then(function(d) {
-    console.log(d);
+  .then(function(branches) {
+    console.log(branches);
   })
   .catch(function(e) {
     console.log(e);
