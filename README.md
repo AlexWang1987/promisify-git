@@ -10,7 +10,6 @@ if you get any bugs or improvements, please check this repo and make it better. 
 ```javascript
 var git = require('promisify-git');
 
-//getCurrentBranch
 git
   .getCurrentBranch()
   .then(function(branch) {
@@ -20,7 +19,6 @@ git
     console.log(e);
   })
 
-//getTags
 git
   .getTags()
   .then(function(tags) {
