@@ -1,6 +1,9 @@
 var Promise = require('bluebird');
+var bash = require('promisify-bash');
 var fs = Promise.promisifyAll(require('fs'));
-var cmd = require('child_process').exec;
+
+//git wrapper
+var git = {};
 
 /**
  * This is a git base tool
@@ -15,14 +18,7 @@ var git = function(subcmd, options) {
   if (!options)
     options = {};
 
-  return new Promise(function(resolve, reject) {
-    cmd('git ' + subcmd, options, function(error, stdout, stderr) {
-      if (error) {
-        return reject(stdout || stderr || error)
-      }
-      resolve(stdout);
-    });
-  })
+  return bash('git ' + subcmd, options);
 }
 
 //get all file in a directory recursively
@@ -70,7 +66,7 @@ var getGitRepo = function(git_repo_path) {
 }
 
 //get current branch, default: .git/HEAD
-var getBranch = function(git_repo_path) {
+git.getBranch = function(git_repo_path) {
   return getGitRepo(git_repo_path)
     .then(function(git_path) {
       var head_path = git_path + '/HEAD';
@@ -86,7 +82,7 @@ var getBranch = function(git_repo_path) {
 }
 
 //get all local branches,default:.git/refs/heads/..
-var getBranches = function(git_repo_path) {
+git.getBranches = function(git_repo_path) {
   return getGitRepo(git_repo_path)
     .then(function(git_path) {
       var heads_path = git_path + '/refs/heads';
@@ -98,7 +94,7 @@ var getBranches = function(git_repo_path) {
 }
 
 //get all remote branches,default: .git/refs/remotes/..
-var getRemoteBranches = function(git_repo_path) {
+git.getRemoteBranches = function(git_repo_path) {
   return getGitRepo(git_repo_path)
     .then(function(git_path) {
       var remote_heads_path = git_path + '/refs/remotes';
@@ -110,7 +106,7 @@ var getRemoteBranches = function(git_repo_path) {
 }
 
 //get all local tags,default: .git/refs/tags/..
-var getTags = function(git_repo_path) {
+git.getTags = function(git_repo_path) {
   return getGitRepo(git_repo_path)
     .then(function(git_path) {
       var tags_path = git_path + '/refs/tags';
@@ -122,7 +118,7 @@ var getTags = function(git_repo_path) {
 }
 
 //Branch Command Operations
-var hasBranch = function(branchName) {
+git.hasBranch = function(branchName) {
   return getBranches()
     .call('indexOf', branchName)
     .then(function(index) {
@@ -130,36 +126,37 @@ var hasBranch = function(branchName) {
     })
 }
 
-var addBranch = function(branchName) {
+git.addBranch = function(branchName) {
   return git('branch ' + branchName)
 }
 
-var delBranch = function(branchName) {
+git.delBranch = function(branchName) {
   return git('branch -d ' + branchName)
 }
 
-var updateBranch = function(oldName, newName) {
+git.updateBranch = function(oldName, newName) {
   return git('branch -m ' + oldName + ' ' + newName)
 }
 
 //Tag Command Operations
-var hasTag = function(tagname) {
-  return getTags()
+git.hasTag = function(tagname) {
+  return getTags(cwd)
     .call('indexOf', tagname)
     .then(function(index) {
       return index !== -1
     })
 }
 
-var addTag = function(tagname) {
-  return git('tag ' + tagname)
+git.addTag = function(tagname) {
+  return git('tag ' + tagname,cwd)
 }
 
-var updateTag = function(tagname) {
+git.updateTag = function(tagname) {
   return git('tag -f ' + tagname)
 }
 
-var delTag = function(tagname) {
+git.delTag = function(tagname) {
   return git('tag -d ' + tagname)
 }
 
+module.exports = git;
