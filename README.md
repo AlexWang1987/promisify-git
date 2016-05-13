@@ -7,7 +7,7 @@ if you get any bugs or improvements, please check this repo and make it better. 
 
 # usage
 
-```
+```javascript
 var git = require('promisify-git');
 
 //getCurrentBranch
