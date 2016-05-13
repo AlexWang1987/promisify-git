@@ -12,10 +12,10 @@ var git = {};
  * @return {Promise}             - Return a git promise
  */
 var git = function(subcmd, options) {
-  if (!subcmd)
+  if(!subcmd)
     subcmd = 'status'
 
-  if (!options)
+  if(!options)
     options = {};
 
   return bash('git ' + subcmd, options);
@@ -26,7 +26,7 @@ var getFilesByDir = function(dir_path) {
   return fs.statAsync(dir_path)
     .call('isDirectory')
     .then(function(isDirectory) {
-      if (isDirectory) {
+      if(isDirectory) {
         return fs.readdirAsync(dir_path)
           .map(function(file_name) {
             var file_path = dir_path + '/' + file_name;
@@ -39,7 +39,7 @@ var getFilesByDir = function(dir_path) {
               })
           })
           .reduce(function(files, file_item) {
-            if (file_item.isDirectory) {
+            if(file_item.isDirectory) {
               return getFilesByDir(file_item.file_path)
                 .then(function(subDirFiles) {
                   return files.concat(subDirFiles)
@@ -54,9 +54,8 @@ var getFilesByDir = function(dir_path) {
 }
 
 //get git_repo pathname, default: process.cwd() + '/.git'
-var getGitRepo = function(git_repo_path) {
-  if (!git_repo_path)
-    git_repo_path = process.cwd() + '/.git';
+var getGitRepo = function(options) {
+  var git_repo_path = ((options && options['cwd']) || process.cwd()) + '/.git';
 
   return fs.statAsync(git_repo_path)
     .call('isDirectory')
@@ -66,13 +65,12 @@ var getGitRepo = function(git_repo_path) {
 }
 
 //get current branch, default: .git/HEAD
-git.getBranch = function(git_repo_path) {
-  return getGitRepo(git_repo_path)
+git.getBranch = function(options) {
+  return getGitRepo(options)
     .then(function(git_path) {
       var head_path = git_path + '/HEAD';
 
-      return fs.readFileAsync(head_path,
-        {
+      return fs.readFileAsync(head_path, {
           encoding: 'UTF-8'
         })
         .then(function(head_cnt) {
@@ -82,8 +80,8 @@ git.getBranch = function(git_repo_path) {
 }
 
 //get all local branches,default:.git/refs/heads/..
-git.getBranches = function(git_repo_path) {
-  return getGitRepo(git_repo_path)
+git.getBranches = function(options) {
+  return getGitRepo(options)
     .then(function(git_path) {
       var heads_path = git_path + '/refs/heads';
       return getFilesByDir(heads_path)
@@ -94,8 +92,8 @@ git.getBranches = function(git_repo_path) {
 }
 
 //get all remote branches,default: .git/refs/remotes/..
-git.getRemoteBranches = function(git_repo_path) {
-  return getGitRepo(git_repo_path)
+git.getRemoteBranches = function(options) {
+  return getGitRepo(options)
     .then(function(git_path) {
       var remote_heads_path = git_path + '/refs/remotes';
       return getFilesByDir(remote_heads_path)
@@ -106,8 +104,8 @@ git.getRemoteBranches = function(git_repo_path) {
 }
 
 //get all local tags,default: .git/refs/tags/..
-git.getTags = function(git_repo_path) {
-  return getGitRepo(git_repo_path)
+git.getTags = function(options) {
+  return getGitRepo(options)
     .then(function(git_path) {
       var tags_path = git_path + '/refs/tags';
       return getFilesByDir(tags_path)
@@ -118,45 +116,45 @@ git.getTags = function(git_repo_path) {
 }
 
 //Branch Command Operations
-git.hasBranch = function(branchName) {
-  return getBranches()
+git.hasBranch = function(branchName, options) {
+  return getBranches(options)
     .call('indexOf', branchName)
     .then(function(index) {
       return index !== -1
     })
 }
 
-git.addBranch = function(branchName) {
-  return git('branch ' + branchName)
+git.addBranch = function(branchName, options) {
+  return git('branch ' + branchName, options)
 }
 
-git.delBranch = function(branchName) {
-  return git('branch -d ' + branchName)
+git.delBranch = function(branchName, options) {
+  return git('branch -d ' + branchName, options)
 }
 
-git.updateBranch = function(oldName, newName) {
-  return git('branch -m ' + oldName + ' ' + newName)
+git.updateBranch = function(oldName, newName, options) {
+  return git('branch -m ' + oldName + ' ' + newName, options)
 }
 
 //Tag Command Operations
-git.hasTag = function(tagname) {
-  return getTags(cwd)
+git.hasTag = function(tagname, options) {
+  return getTags(options)
     .call('indexOf', tagname)
     .then(function(index) {
       return index !== -1
     })
 }
 
-git.addTag = function(tagname) {
-  return git('tag ' + tagname,cwd)
+git.addTag = function(tagname, options) {
+  return git('tag ' + tagname, options)
 }
 
-git.updateTag = function(tagname) {
-  return git('tag -f ' + tagname)
+git.updateTag = function(tagname, options) {
+  return git('tag -f ' + tagname, options)
 }
 
-git.delTag = function(tagname) {
-  return git('tag -d ' + tagname)
+git.delTag = function(tagname, options) {
+  return git('tag -d ' + tagname, options)
 }
 
 module.exports = git;
