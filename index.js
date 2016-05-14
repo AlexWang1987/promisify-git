@@ -137,24 +137,24 @@ git.updateBranch = function(oldName, newName, options) {
 }
 
 //Tag Command Operations
-git.hasTag = function(tagname, options) {
+git.hasTag = function(tagName, options) {
   return getTags(options)
-    .call('indexOf', tagname)
+    .call('indexOf', tagName)
     .then(function(index) {
       return index !== -1
     })
 }
 
-git.addTag = function(tagname, options) {
-  return git('tag ' + tagname, options)
+git.addTag = function(tagName, options) {
+  return git('tag ' + tagName, options)
 }
 
-git.updateTag = function(tagname, options) {
-  return git('tag -f ' + tagname, options)
+git.updateTag = function(tagName, options) {
+  return git('tag -f ' + tagName, options)
 }
 
-git.delTag = function(tagname, options) {
-  return git('tag -d ' + tagname, options)
+git.delTag = function(tagName, options) {
+  return git('tag -d ' + tagName, options)
 }
 
 module.exports = git;

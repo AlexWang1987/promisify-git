@@ -5,7 +5,7 @@ var cwd = __dirname.substring(0,__dirname.lastIndexOf('/'));
 
 //getAllBranches
 git
-  .getBranches({
+  .getTags({
     cwd: cwd
   })
   .then(function(d) {

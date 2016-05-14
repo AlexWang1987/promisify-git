@@ -5,7 +5,7 @@ This library aims to operate git repo locally in promisifying way.
 if you get any bugs or improvements, please check this repo and make it better. Making a pull request is preferred.
 
 
-# usage
+## usage
 
 ```javascript
 var git = require('promisify-git');
@@ -41,3 +41,25 @@ git
   })
 
 ```
+
+
+## API
+
+### tag
+
+* hasTag(tagName,[options])
+* addTag(tagName,[options])
+* updateTag(new_tagName,[options])
+* delTag(tagName,[options])
+* getTags([options])
+
+### branch
+
+* hasBranch(branchName,[options])
+* addBranch(branchName,[options])
+* delBranch(branchName,[options])
+* updateBranch(oldBranch,newBranch,[options])
+* getBranch([options])
+* getBranches([options])
+
+continuing...
