@@ -62,4 +62,5 @@ git
 * getBranch([options])
 * getBranches([options])
 
+
 continuing...
