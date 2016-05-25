@@ -70,3 +70,10 @@ git
 
 
 continuing...
+
+# Good Library Companions
+# [promisify-cli](https://www.npmjs.com/package/promisify-cli)
+# [promisify-bash](https://www.npmjs.com/package/promisify-bash)
+# [promisify-fs](https://www.npmjs.com/package/promisify-fs)
+# [promsifiy-fetch](https://www.npmjs.com/package/promisify-fetch)
+# [promsifiy-npm](https://www.npmjs.com/package/promisify-npm)
