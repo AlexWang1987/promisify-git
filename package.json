@@ -1,6 +1,6 @@
 {
   "name": "promisify-git",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "This library aims to operate git repo locally in promisifying way.",
   "main": "index.js",
   "scripts": {
