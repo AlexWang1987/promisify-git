@@ -27,7 +27,7 @@ git.initGit = function (options) {
   return Promise.each([
     git('init', options),
     git('add .'),
-    git('commit -m Git Initial Commit')
+    git('commit -m "Git Initial Commit"')
   ], function (taskItem) {
     return taskItem
   });
