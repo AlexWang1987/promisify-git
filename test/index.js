@@ -1,16 +1,17 @@
 var git = require('../index.js');
 
 //current working directory
-var cwd = __dirname.substring(0,__dirname.lastIndexOf('/'));
+var cwd = __dirname.substring(0, __dirname.lastIndexOf('/'));
 
 //getAllBranches
 git
-  .getRemoteBranches({
-    cwd: cwd
+  .initGit({
+    gcwd: './'
   })
-  .then(function(d) {
+  .then(function (d) {
     console.log(d);
   })
-  .catch(function(e) {
-    console.log(e);
+  .catch(function (e) {
+    console.error('catch->', e);
   })
+
