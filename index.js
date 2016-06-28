@@ -27,7 +27,10 @@ git.initGit = function (options) {
   return Promise.each([
     git('init', options),
     git('add .', options),
-    git('commit --amend -m "Git Initial Commit"', options)
+    git('commit -m "Git Initial Commit"', options)
+    .catch(function (e) {
+      return 'when reiniting, there is a nothing commit bug,but it"s ok.';
+    })
   ], function (taskResult) {
     return taskResult;
   });
