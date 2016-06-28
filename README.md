@@ -37,7 +37,7 @@ git
 //you can specify any git working directory with parameter **cwd**
 git
   .getBranches({
-    cwd: cwd //optional, a specific git working directory , default is process.cwd
+    gcwd: gcwd //optional, a specific git working directory , default is process.cwd
   })
   .then(function(branches) {
     console.log(branches);
