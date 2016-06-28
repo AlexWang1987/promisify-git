@@ -28,7 +28,9 @@ git.initGit = function (options) {
     git('init', options),
     git('add .'),
     git('commit -m Git Initial Commit')
-  ]);
+  ], function (taskItem) {
+    return taskItem
+  });
 }
 
 //get all file in a directory recursively
