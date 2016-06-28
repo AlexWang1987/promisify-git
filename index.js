@@ -26,8 +26,8 @@ var git = function (subcmd, options) {
 git.initGit = function (options) {
   return Promise.each([
     git('init', options),
-    git('add .'),
-    git('commit -m "Git Initial Commit"')
+    git('add .', options),
+    git('commit -m "Git Initial Commit"', options)
   ], function (taskItem) {
     return taskItem
   });
