@@ -40,12 +40,8 @@ git.initGit = function (options) {
           git('init', options),
           git('add .', options),
           git('commit -m "Git Initial Commit"', options)
-          .catch(function (e) {
-            return 'when reiniting, there is a nothing commit bug,but it"s ok.';
-          })
         ], function (taskResult) {
           console.log(taskResult);
-          return taskResult;
         });
       }
     })
