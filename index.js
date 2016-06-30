@@ -1,10 +1,17 @@
 /*eslint-disable*/
 var Promise = require('bluebird');
+var path = require('path');
 var bash = require('promisify-bash');
+var pfs = require('promisify-fs');
 var fs = Promise.promisifyAll(require('fs'));
 
 //git wrapper
 var git = {};
+
+//utils -- tools
+function gitDefaultRepo(options) {
+  return path.resolve(((options && options['gcwd']) || process.cwd())) + '/.git';
+}
 
 /**
  * This is a git base tool
@@ -24,16 +31,23 @@ var git = function (subcmd, options) {
 
 //initilized a git repo
 git.initGit = function (options) {
-  return Promise.each([
-    git('init', options),
-    git('add .', options),
-    git('commit -m "Git Initial Commit"', options)
-    .catch(function (e) {
-      return 'when reiniting, there is a nothing commit bug,but it"s ok.';
+  var git_repo_path = gitDefaultRepo(options);
+  return pfs
+    .folderExists(git_repo_path)
+    .then(function (file_stat) {
+      if (!file_stat) {
+        return Promise.each([
+          git('init', options),
+          git('add .', options),
+          git('commit -m "Git Initial Commit"', options)
+          .catch(function (e) {
+            return 'when reiniting, there is a nothing commit bug,but it"s ok.';
+          })
+        ], function (taskResult) {
+          return taskResult;
+        });
+      }
     })
-  ], function (taskResult) {
-    return taskResult;
-  });
 }
 
 //get all file in a directory recursively

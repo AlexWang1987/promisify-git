@@ -23,6 +23,7 @@
   "homepage": "https://github.com/AlexWang1987/promisify-git#readme",
   "dependencies": {
     "bluebird": "3.3.5",
-    "promisify-bash": "1.0.0"
+    "promisify-bash": "1.0.0",
+    "promisify-fs": "^1.0.33"
   }
 }
