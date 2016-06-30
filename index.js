@@ -36,13 +36,7 @@ git.initGit = function (options) {
     .folderExists(git_repo_path)
     .then(function (file_stat) {
       if (!file_stat) {
-        return Promise.each([
-          git('init', options),
-          git('add .', options),
-          git('commit -m "Git Initial Commit"', options)
-        ], function (taskResult) {
-          console.log(taskResult);
-        });
+        return git('init', options)
       }
     })
 }
