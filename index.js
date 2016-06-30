@@ -44,6 +44,7 @@ git.initGit = function (options) {
             return 'when reiniting, there is a nothing commit bug,but it"s ok.';
           })
         ], function (taskResult) {
+          console.log(taskResult);
           return taskResult;
         });
       }
